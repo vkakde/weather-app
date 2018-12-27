@@ -1,0 +1,2 @@
+/home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/obj/Linux/x86_64/debug_static/CppUnitException.o /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/obj/Linux/x86_64/release_static/CppUnitException.o /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/obj/Linux/x86_64/debug_shared/CppUnitException.o /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/obj/Linux/x86_64/release_shared/CppUnitException.o: src/CppUnitException.cpp \
+ include/CppUnit/CppUnitException.h include/CppUnit/CppUnit.h

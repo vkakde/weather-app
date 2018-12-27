@@ -1,0 +1,37 @@
+/home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/testsuite/obj/Linux/x86_64/debug_static/MailMessageTest.o /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/testsuite/obj/Linux/x86_64/release_static/MailMessageTest.o /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/testsuite/obj/Linux/x86_64/debug_shared/MailMessageTest.o /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/testsuite/obj/Linux/x86_64/release_shared/MailMessageTest.o: src/MailMessageTest.cpp src/MailMessageTest.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/Net.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Foundation.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Config.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Platform.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Platform_POSIX.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Alignment.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Bugcheck.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Types.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/include/CppUnit/TestCase.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/include/CppUnit/CppUnit.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/include/CppUnit/Guards.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/include/CppUnit/Test.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/include/CppUnit/CppUnitException.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/include/CppUnit/TestCaller.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/include/CppUnit/Guards.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/include/CppUnit/TestCase.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/CppUnit/include/CppUnit/TestSuite.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/MailMessage.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/MessageHeader.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/NameValueCollection.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/String.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Ascii.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/ListMap.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Exception.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/MailRecipient.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/PartStore.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/PartSource.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/FileStream.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/FileStream_POSIX.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/BufferedBidirectionalStreamBuf.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/BufferAllocator.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/StreamUtil.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/include/Poco/Timestamp.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/PartHandler.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/StringPartSource.h \
+ /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Net/include/Poco/Net/MediaType.h

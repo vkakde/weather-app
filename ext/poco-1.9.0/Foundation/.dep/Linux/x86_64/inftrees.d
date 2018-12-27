@@ -1,0 +1,2 @@
+/home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/obj/Linux/x86_64/debug_static/inftrees.o /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/obj/Linux/x86_64/release_static/inftrees.o /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/obj/Linux/x86_64/debug_shared/inftrees.o /home/osboxes/workspace/weather-app/ext/poco-1.9.0/Foundation/obj/Linux/x86_64/release_shared/inftrees.o: src/inftrees.c src/zutil.h src/zlib.h src/zconf.h \
+ src/inftrees.h
