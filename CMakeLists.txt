@@ -17,6 +17,6 @@ aux_source_directory(src LOCAL_SRCS)
 add_executable( ${PROJECT_NAME} ${LOCAL_SRCS} )
 
 #link libraries by linking 'lib' directory and names of libs (.so files)
-LINK_DIRECTORIES(ext/poco-1.9.0/lib/Linux/x86_64)
+#LINK_DIRECTORIES(ext/poco-1.9.0/lib/Linux/x86_64)
 target_link_libraries( ${PROJECT_NAME} PocoNet PocoUtil PocoJSON PocoXML PocoFoundation )
 
