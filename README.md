@@ -23,6 +23,8 @@ Once all ext libs have been built, export their paths. For example - if POCO lib
 > export LIBRARY_PATH=/home/user1/poco/lib/Linux/x86_64  
 > export LD_LIBRARY_PATH=/home/user1/poco/lib/Linux/x86_64  
 
+startup.sh can do the above steps for you. Simply "source startup.sh".
+
 ## Server
 Server is defined as cmake project "server". With Poco built successfully, navigate to build/ in root. 
 > cmake ..  
