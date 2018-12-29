@@ -46,15 +46,12 @@ class server{
 	std::string doHTTPRequest(Poco::Net::HTTPClientSession &session, Poco::Net::HTTPRequest &request, Poco::Net::HTTPResponse &response){
 		session.sendRequest(request);
 		std::istream &is = session.receiveResponse(response);
-		std::string s_response;
 		std::stringbuf sb;
 		std::ostream os(&sb);
-		//rs>>&sb;
 		StreamCopier::copyStream(is, os);
-		s_response = sb.str();
 		// std::cout << response.getStatus() << " " << response.getReason() << std::endl;
 		// StreamCopier::copyStream(is, std::cout);
-		return s_response;
+		return sb.str();
 	}
 
 	///\cite https://stackoverflow.com/a/18776035
