@@ -1,11 +1,10 @@
 ///\author Vishwajeet Kakde
-///\cite https://github.com/pocoproject/poco/blob/develop/Net/samples/httpget/src/httpget.cpp
 
 // standard includes
 #include <iostream>
 #include <string>
 
-// includes from POCO library
+// includes from POCO Net library
 #include "Poco/Net/HTTPClientSession.h"
 #include "Poco/Net/HTTPRequest.h"
 #include "Poco/Net/HTTPResponse.h"
@@ -16,7 +15,11 @@
 #include "Poco/URI.h"
 #include "Poco/Exception.h"
 
-///\remark Not a good idea to imply so many namespaces
+// includes from POCO JSON library
+#include "Poco/JSON/Parser.h"
+#include "Poco/JSON/ParseHandler.h"
+#include "Poco/JSON/JSONException.h"
+
 using Poco::Exception;
 using Poco::Path;
 using Poco::StreamCopier;
@@ -25,6 +28,7 @@ using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPMessage;
 using Poco::Net::HTTPRequest;
 using Poco::Net::HTTPResponse;
+using namespace Poco::JSON;
 
 class server{
 	std::string APIKEY = "f6973a433d45ee52c637f99755a73e40";
@@ -38,11 +42,31 @@ class server{
 		return APIKEY;
 	}
 
-	void doRequest(Poco::Net::HTTPClientSession &session, Poco::Net::HTTPRequest &request, Poco::Net::HTTPResponse &response){
+	///\cite https://github.com/pocoproject/poco/blob/develop/Net/samples/httpget/src/httpget.cpp
+	std::string doHTTPRequest(Poco::Net::HTTPClientSession &session, Poco::Net::HTTPRequest &request, Poco::Net::HTTPResponse &response){
 		session.sendRequest(request);
-		std::istream &rs = session.receiveResponse(response);
+		std::istream &is = session.receiveResponse(response);
+		std::string s_response;
+		std::stringbuf sb;
+		std::ostream os(&sb);
+		//rs>>&sb;
+		StreamCopier::copyStream(is, os);
+		s_response = sb.str();
 		// std::cout << response.getStatus() << " " << response.getReason() << std::endl;
-		StreamCopier::copyStream(rs, std::cout);
+		// StreamCopier::copyStream(is, std::cout);
+		return s_response;
+	}
+
+	///\cite https://stackoverflow.com/a/18776035
+	std::string getValue(Object::Ptr aoJsonObject, std::string key) {
+    	Poco::Dynamic::Var loVariable;
+    	std::string lsReturn;
+  
+    	// Get the member variable
+    	loVariable = aoJsonObject->get(key);
+
+    	// Return value as string
+    	return loVariable.convert<std::string>();
 	}
 };
 
@@ -68,11 +92,36 @@ int main(int argc, char **argv)
 		if (path.empty())
 			path = "/";
 
+		// create http req/res objects
 		HTTPClientSession session(uri.getHost(), uri.getPort());
 		HTTPRequest request(HTTPRequest::HTTP_GET, path, HTTPMessage::HTTP_1_1);
 		HTTPResponse response;
 
-		svr.doRequest(session, request, response);
+		// send HTTP request and record response head and response body
+		std::string s_responseBody = svr.doHTTPRequest(session, request, response);
+
+		// Convert the response head to ostream, then to string
+		std::stringbuf sb;
+		std::ostream os(&sb);
+		response.write(os);
+		std::string s_responseHead = sb.str();
+		
+		// TEST
+		std::cout<<"\nResponse head-- \n"<<s_responseHead;
+		std::cout<<"Response body-- \n"<<s_responseBody;
+	
+		// Parse the JSON and get the Results
+		Parser loParser;
+    	Poco::Dynamic::Var loParsedJson = loParser.parse(s_responseBody);
+    	Poco::Dynamic::Var loParsedJsonResult = loParser.result();
+
+    	// Get the JSON Object
+    	Object::Ptr loJsonObject = loParsedJsonResult.extract<Object::Ptr>();
+
+		// Get values for specific keys of the JSON object (name = city, main = key weather metrics)
+	    std::cout<<"\n\nKey-value pairs of parsed JSON -- \n";
+		std::cout << "Name: " << svr.getValue(loJsonObject, "name");
+	    std::cout << "\nMain: " << svr.getValue(loJsonObject, "main");
 	}
 	catch (Exception &exc)
 	{
