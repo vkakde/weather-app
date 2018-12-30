@@ -7,9 +7,12 @@ project (${PROJECT_NAME})
 
 #directories with header files to include
 #Getting env vars in cmake: https://stackoverflow.com/a/26336049
+# POCO includes
 include_directories($ENV{POCO_HOME}/Foundation/include)
 include_directories($ENV{POCO_HOME}/JSON/include)
 include_directories($ENV{POCO_HOME}/Net/include)
+# ZMQ includes
+include_directories($ENV{CPPZMQ_HOME})
 
 #set src directory
 set(LOCAL_SRCS "")
@@ -19,5 +22,5 @@ add_executable( ${PROJECT_NAME} ${LOCAL_SRCS} )
 
 #link libraries by linking 'lib' directory and names of libs (.so files)
 #LINK_DIRECTORIES(ext/poco-1.9.0/lib/Linux/x86_64)
-target_link_libraries( ${PROJECT_NAME} PocoNet PocoUtil PocoJSON PocoXML PocoFoundation )
+target_link_libraries( ${PROJECT_NAME} PocoNet PocoUtil PocoJSON PocoXML PocoFoundation zmq )
 
