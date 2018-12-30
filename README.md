@@ -18,17 +18,22 @@ This project is a WIP
 
 (https://raw.githubusercontent.com/pocoproject/poco/poco-1.9.0-release/README)
 
-## Exporting library path
-Once all ext libs have been built, export their paths. For example - if POCO lib folder exists in /home/user1/poco/lib/Linux/x86_64:
-> export LIBRARY_PATH=/home/user1/poco/lib/Linux/x86_64  
-> export LD_LIBRARY_PATH=/home/user1/poco/lib/Linux/x86_64  
+## Zero MQ (provides messaging services) + CPP Zero MQ (C++ implementation of generic ZMQ)
+1. Get ZMQ core from https://github.com/zeromq/libzmq
 
-startup.sh can do the above steps for you. Simply "source startup.sh".
+2. Get CPPZMQ from https://github.com/zeromq/cppzmq
 
-## Server
-Server is defined as cmake project "server". With Poco built successfully, navigate to build/ in root. 
-> cmake ..  
+3. Follow build steps here: https://github.com/zeromq/cppzmq/blob/master/README.md
+
+## Exporting library paths
+Once all ext libs have been successfully built, export their lib/.so paths for cmake/make to find. 
+startup.sh can do the above steps for you. Simply "source startup.sh" from the root folder.
+
+## Client and Server builds
+In root folder:
+> mkdir build && cd build
+> cmake ..
 > make
 
-With successful make, an executable "server" should now exist in build/. Run this to start the server. 
+This should build the server project in folder "server/" and client project in folder "client/". These are executable projects. Run them.
 
