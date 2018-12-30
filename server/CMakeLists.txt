@@ -12,6 +12,7 @@ include_directories($ENV{POCO_HOME}/Foundation/include)
 include_directories($ENV{POCO_HOME}/JSON/include)
 include_directories($ENV{POCO_HOME}/Net/include)
 # ZMQ includes
+# Why we include cppzmq and not libzmq: https://stackoverflow.com/a/18323130
 include_directories($ENV{CPPZMQ_HOME})
 
 #set src directory
