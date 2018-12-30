@@ -26,8 +26,8 @@ This project is a WIP
 3. Follow build steps here: https://github.com/zeromq/cppzmq/blob/master/README.md  
 
 ## Exporting library paths
-Once all ext libs have been successfully built, export their lib/.so paths for cmake/make to find. 
-startup.sh can do the above steps for you. Simply "source startup.sh" from the root folder.
+Once all ext libs have been successfully built, their lib/.so paths need to be exported for cmake/make to find. 
+startup.sh can do these steps for you. Simply "source startup.sh" from the root folder.
 
 ## Client and Server builds
 In root folder:  
