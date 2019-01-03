@@ -7,6 +7,7 @@ server::server(const server& copy){}
 
 server::~server(){
 	// delete zmq context and socket
+	socket->close();
 	delete(context);
 	delete(socket);
 }
@@ -15,7 +16,7 @@ void server::init(){
     //  Prepare context and socket
 	context = new zmq::context_t(1);
 	socket = new zmq::socket_t(*context, ZMQ_REP);
-	socket->bind("tcp://*:5555");
+	socket->bind("tcp://127.0.0.1:5554");
 }
 
 zmq::socket_t* server::getSocket(){
@@ -95,10 +96,10 @@ int main(int argc, char **argv)
 
         		//  Wait for next request from client
         		svr.getSocket()->recv(&request);
-				///\cite Convert cstring to string: https://stackoverflow.com/a/8960101
-				std::string s_request((char*)request.data());
+		        ///\cite Convert message_t data from void* to string: https://stackoverflow.com/a/10967058
+		    	std::string s_request = std::string(static_cast<char*>(request.data()), request.size());
 
-        		std::cout << "Received " + s_request + "\n";
+        		std::cout << "\nReceived " + s_request + "\n";
 
         		// Process request
 				HTTPResponse response;
@@ -107,6 +108,7 @@ int main(int argc, char **argv)
 				// Send response to client
 				if(response.getStatus()!=Poco::Net::HTTPResponse::HTTP_OK){
 					std::cout<<"\nFailed. HTTP Response Code: "<<response.getStatus();
+					svr.getSocket()->send (zmq::message_t());
 				}
 				else{
 	        		//  Send reply back to client

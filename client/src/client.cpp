@@ -10,7 +10,7 @@ int main ()
     zmq::socket_t socket (context, ZMQ_REQ);
 
     std::cout << "Connecting to server..." << std::endl;
-    socket.connect ("tcp://localhost:5555");
+    socket.connect ("tcp://localhost:5554");
 
     string input = "";
 
@@ -24,16 +24,20 @@ int main ()
         // create request and send message 
         zmq::message_t request (input.length());
         memcpy (request.data (), input.c_str(), input.length());
+        std::cout<<"\n"<<request.data()<<"\n";
         socket.send (request);
 
         // get server reply
         zmq::message_t reply;
         socket.recv (&reply);
-		///\cite Convert cstring to string: https://stackoverflow.com/a/8960101
-		std::string s_reply((char*)reply.data());
+        ///\cite Convert message_t data from void* to string: https://stackoverflow.com/a/10967058
+    	std::string s_reply = std::string(static_cast<char*>(reply.data()), reply.size());
 
         cout<<"Reply from server: " + s_reply;
     }
+
+    // close socket and exit
+    socket.close();
 
     return 0;
 }
