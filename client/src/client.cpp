@@ -1,11 +1,7 @@
 ///\author Vishwajeet Kakde
 ///\cite https://github.com/booksbyus/zguide/blob/master/examples/C%2B%2B/hwclient.cpp
 
-#include<iostream>
-#include<string>
-#include "zmq.hpp"
-
-using namespace std;
+#include "../include/client.hpp"
 
 int main ()
 {
@@ -21,6 +17,9 @@ int main ()
     while(input!="q"){
         cout<<"\n\nEnter city name (\'q\' to quit): ";
         getline(cin, input);
+
+        if(input=="q")
+            continue;
 
         // create request and send message 
         zmq::message_t request (input.length());
