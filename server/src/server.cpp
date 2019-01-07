@@ -48,6 +48,10 @@ int server::newClientHandler(){
 	return id;
 }
 
+void server::teardownClientHandler(){
+
+}
+
 std::string server::getAPIKey(){
 	return APIKEY;
 }
@@ -108,7 +112,7 @@ int main(int argc, char **argv)
 
 		// initialize server
 		svr.init();
-		std::cout<<"\n -- Server is ready and awaiting client requests -- \n\n";
+		std::cout<<"\n -- Server is ready and awaiting client requests -- \n";
 
 		// begin accepting client requests
     	while (true) {
@@ -131,6 +135,21 @@ int main(int argc, char **argv)
     	    		zmq::message_t reply (s_response.length());
         			memcpy (reply.data (), s_response.c_str(), s_response.length());
         			svr.getSocket()->send (reply);
+
+					// std::cout<<"\n|| Active clients = "<<svr.connectedClients.size();
+				}
+
+				else if(s_request == "teardown"){
+					// invoke new client handler - assigns new data socket
+					// svr.teardownClientHandler(clientId);
+
+					// reply to client with ACK
+					std::string s_response = "ACK";
+    	    		zmq::message_t reply (s_response.length());
+        			memcpy (reply.data (), s_response.c_str(), s_response.length());
+        			svr.getSocket()->send (reply);
+
+					std::cout<<"\n|| Active clients = "<<svr.connectedClients.size();
 				}
 
 				else{

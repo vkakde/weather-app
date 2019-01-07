@@ -59,6 +59,8 @@ class server{
 
 	int newClientHandler();
 
+	void teardownClientHandler();
+
 	std::string getAPIKey();
 
 	std::string getCityWeatherData(std::string cityName, HTTPResponse &response);
