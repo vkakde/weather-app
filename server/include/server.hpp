@@ -6,6 +6,9 @@
 #include <string>
 #include <unistd.h>
 #include <thread>
+#include <map>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 
 // includes from POCO Net library
 #include "Poco/Net/HTTPClientSession.h"
@@ -42,6 +45,8 @@ class server{
 	zmq::socket_t *socket;
 
 	public:
+	int data_port = 6001; // ports for data communication: in the range 6001-6010;
+	std::map<int, zmq::socket_t*> connectedClients; // client ID, client data socket
 	server();
 	server(const server& copy);
 	~server();
@@ -51,6 +56,8 @@ class server{
 	zmq::socket_t* getSocket();
 
 	zmq::context_t* getContext();
+
+	int newClientHandler();
 
 	std::string getAPIKey();
 

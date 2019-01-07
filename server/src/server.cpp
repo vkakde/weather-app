@@ -27,6 +27,27 @@ zmq::context_t* server::getContext(){
 	return context;
 }
 
+int server::newClientHandler(){
+	// assign new ID to client
+	std::srand(time(NULL));
+	int id = rand(); 
+
+	// assign new socket for data exchange exclusively with this client
+	try{
+		zmq::socket_t *newSocket;
+		zmq::context_t *newContext = new zmq::context_t(1);
+		newSocket = new zmq::socket_t(*newContext, ZMQ_PAIR);
+		newSocket->bind("tcp://127.0.0.1:"+std::to_string(data_port));
+		connectedClients.insert(std::make_pair(id, newSocket));
+		data_port++;
+	} catch(std::exception &e){
+		std::cout<<"\nException in binding new data socket: "<<e.what();
+	}
+
+	// std::cout<<"\nnew socket bound\n";
+	return id;
+}
+
 std::string server::getAPIKey(){
 	return APIKEY;
 }
@@ -99,25 +120,50 @@ int main(int argc, char **argv)
 		        ///\cite Convert message_t data from void* to string: https://stackoverflow.com/a/10967058
 		    	std::string s_request = std::string(static_cast<char*>(request.data()), request.size());
 
-        		std::cout << "\nReceived " + s_request + "\n";
+				// std::cout << "\nReceived " + s_request + "\n";
 
-        		// Process request
-				HTTPResponse response;
-				std::string responseBody = svr.getCityWeatherData(s_request, response);
+				if(s_request == "new"){
+					// invoke new client handler - assigns new data socket
+					int clientId = svr.newClientHandler();
 
-				// Send response to client
-				if(response.getStatus()!=Poco::Net::HTTPResponse::HTTP_OK){
-					std::cout<<"\nFailed. HTTP Response Code: "<<response.getStatus();
-					svr.getSocket()->send (zmq::message_t());
-				}
-				else{
-	        		//  Send reply back to client
-    	    		zmq::message_t reply (responseBody.length());
-        			memcpy (reply.data (), responseBody.c_str(), responseBody.length());
+					// reply to client with its unique ID and port#
+					std::string s_response = std::to_string(clientId) + " " + std::to_string(svr.data_port-1);
+    	    		zmq::message_t reply (s_response.length());
+        			memcpy (reply.data (), s_response.c_str(), s_response.length());
         			svr.getSocket()->send (reply);
 				}
+
+				else{
+					// ACK client request on ctl port with ACK
+					std::string s_response = "ACK";
+    	    		zmq::message_t reply (s_response.length());
+        			memcpy (reply.data (), s_response.c_str(), s_response.length());
+        			svr.getSocket()->send (reply);
+
+					// Break client request into clientId and cityName
+					std::stringstream ss(s_request);
+					std::string clientId, cityName;
+					ss>>clientId;
+					ss>>cityName;
+
+					// Process request - get city's weather data
+					HTTPResponse response;
+					std::string responseBody = svr.getCityWeatherData(cityName, response);
+
+					// Send response to client
+					if(response.getStatus()!=Poco::Net::HTTPResponse::HTTP_OK){
+						std::cout<<"\nFailed. HTTP Response Code: "<<response.getStatus();
+						svr.connectedClients[stoi(clientId)]->send (zmq::message_t());
+					}
+					else{
+	        			//  Send reply back to client
+    	    			zmq::message_t reply (responseBody.length());
+        				memcpy (reply.data (), responseBody.c_str(), responseBody.length());
+        				svr.connectedClients[stoi(clientId)]->send (reply);
+					}
+				}
 			}catch(std::exception &e){
-				std::cout<<"\nException! Message: "<<e.what();
+				std::cout<<e.what();
 			}
     	}
 
