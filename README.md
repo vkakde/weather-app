@@ -1,8 +1,8 @@
-# weather-app
-C++ client-server application for serving current weather reports from around the globe using OpenWeather API
+# Weather-app
+C++ client-server application for serving current weather reports from around the globe using OpenWeather API. Single server can serve multiple clients via ZMQ pipes.
 
-# note
-This project is a WIP
+# Note
+This project is WIP.
 
 # External libraries and build steps for Linux
 ## POCO C++ Library (provides REST, JSON and MongoDB utilities for C++)
