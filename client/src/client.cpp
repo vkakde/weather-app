@@ -15,7 +15,8 @@ client::~client(){
     ctlSocket->close();
     delete(ctlContext);
     delete(ctlSocket);
-    // close connection to control socket
+
+    // close connection to data socket
     dataSocket->close();
     delete(dataContext);
     delete(dataSocket);
@@ -33,6 +34,7 @@ void client::teardown(){
     zmq::message_t request (req.length());
     memcpy (request.data (), req.c_str(), req.length());
     ctlSocket->send (request);
+
     // get server response (should simply be an ACK)
     zmq::message_t res;
     ctlSocket->recv (&res);
@@ -54,6 +56,7 @@ zmq::socket_t* client::getDataSocket(){
         zmq::message_t request (req.length());
         memcpy (request.data (), req.c_str(), req.length());
         ctlSocket->send (request);
+
         // server reply will contain connection string to data socket it has allocated
         // for data exchange with this client
         zmq::message_t res;
@@ -64,6 +67,7 @@ zmq::socket_t* client::getDataSocket(){
         ss>>id;
         ss>>port;
         serverAssignedId = id;
+
         // std::cout<<"\nserver assigned id: "<<serverAssignedId;
         // connect to this data socket
         dataContext = new zmq::context_t(1);
@@ -89,8 +93,8 @@ int main ()
     // connect to server (data socket)
     cl.getDataSocket();
 
+    // begin accepting user input
     string input = "";
-
     while(input!="q"){
         cout<<"\n\nEnter city name (\'q\' to quit): ";
         getline(cin, input);
@@ -101,12 +105,12 @@ int main ()
         // client request must be prefixed with its serverAssignedId
         input = cl.serverAssignedId + " " + input;    
 
-        // create request and send message 
+        // create request and send message (via control pipe)
         zmq::message_t request (input.length());
         memcpy (request.data (), input.c_str(), input.length());
         cl.getCtlSocket()->send (request);
 
-        // get data reply
+        // get reply (via data pipe)
         zmq::message_t reply;
         cl.getDataSocket()->recv (&reply);
         ///\cite Convert message_t data from void* to string: https://stackoverflow.com/a/10967058
